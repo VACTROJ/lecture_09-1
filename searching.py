@@ -34,13 +34,36 @@ def linear_search(sequence, number):
     output["count"] = count
     return output
 
+def pattern_search(sequence, pattern):
+    indx =[]
+    #pat_seq = [sequence[i:i + len(pattern)] for i in range(0, len(sequence), len(pattern))]
+    #for i, idx in enumerate(pat_seq):
+        #if idx == pattern:
+            #indx.append(i)
+    for index in range(len(sequence) - len(pattern) + 1):
+        subsequence = sequence[index:(index+len(pattern))]
+        same = True
+        #if subsequence == pattern:
+            #indx.append(index)
+        for letter_subsequence, letter_pattern in zip(subsequence, pattern):
+            if letter_subsequence != letter_pattern:
+                same = False
+                break
+        if same:
+            indx.append(index)
+
+    return indx
+
 
 
 def main():
     unordered_numbers = read_data("sequential.json", "unordered_numbers")
     print(unordered_numbers)
-    number_count = linear_search(unordered_numbers, 0)
+    number_count = linear_search(unordered_numbers, -10)
     print(number_count)
+    dna_seq = read_data("sequential.json", "dna_sequence")
+    dna_idx = pattern_search(dna_seq, "ATA")
+    print(dna_idx)
 
 
 if __name__ == '__main__':
